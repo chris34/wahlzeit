@@ -1,1 +1,3 @@
 Pictures (jpg) in this folder will be automatically added on application start-up.
+
+All inclueded images are taken from https://pixabay.com licensed under CC0
