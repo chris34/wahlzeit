@@ -19,7 +19,6 @@
  */
 package org.wahlzeit.services.mailing;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.wahlzeit.services.EmailAddress;
@@ -38,44 +37,28 @@ public class EmailServiceTest {
 		validAddress = EmailAddress.getFromString("test@test.de");
 	}
 
-	@Test
+	@Test(expected = Test.None.class /* no exception expected */)
 	public void testSendInvalidEmail() {
-		try {
-			assertFalse(emailService.sendEmailIgnoreException(validAddress, null, "lol", "hi"));
-			assertFalse(emailService.sendEmailIgnoreException(null, validAddress, null, "body"));
-			assertFalse(emailService.sendEmailIgnoreException(validAddress, null, "hi", "       "));
-		} catch (Exception ex) {
-			Assert.fail("Silent mode does not allow exceptions");
-		}
+		assertFalse(emailService.sendEmailIgnoreException(validAddress, null, "lol", "hi"));
+		assertFalse(emailService.sendEmailIgnoreException(null, validAddress, null, "body"));
+		assertFalse(emailService.sendEmailIgnoreException(validAddress, null, "hi", "       "));
 	}
 
-	@Test
+	@Test(expected = Test.None.class /* no exception expected */)
 	public void testSendValidEmail() {
-		try {
-			assertTrue(emailService.sendEmailIgnoreException(validAddress, validAddress, "hi", "test"));
-		} catch (Exception ex) {
-			Assert.fail("Silent mode does not allow exceptions");
-		}
+		assertTrue(emailService.sendEmailIgnoreException(validAddress, validAddress, "hi", "test"));
 	}
 
-	@Test
+	@Test(expected = Test.None.class /* no exception expected */)
 	public void testSendInvalidEmail_withBCC() {
-		try {
-			assertFalse(emailService.sendEmailIgnoreException(validAddress, null, validAddress, "lol", "hi"));
-			assertFalse(emailService.sendEmailIgnoreException(null, validAddress, validAddress, null, "body"));
-			assertFalse(emailService.sendEmailIgnoreException(validAddress, null, validAddress, "hi", "       "));
-		} catch (Exception ex) {
-			Assert.fail("Silent mode does not allow exceptions");
-		}
+		assertFalse(emailService.sendEmailIgnoreException(validAddress, null, validAddress, "lol", "hi"));
+		assertFalse(emailService.sendEmailIgnoreException(null, validAddress, validAddress, null, "body"));
+		assertFalse(emailService.sendEmailIgnoreException(validAddress, null, validAddress, "hi", "       "));
 	}
 
-	@Test
+	@Test(expected = Test.None.class /* no exception expected */)
 	public void testSendValidEmail_withBCC() {
-		try {
-			assertTrue(emailService.sendEmailIgnoreException(validAddress, validAddress, validAddress, "hi", "test"));
-		} catch (Exception ex) {
-			Assert.fail("Silent mode does not allow exceptions");
-		}
+		assertTrue(emailService.sendEmailIgnoreException(validAddress, validAddress, validAddress, "hi", "test"));
 	}
 
 }
