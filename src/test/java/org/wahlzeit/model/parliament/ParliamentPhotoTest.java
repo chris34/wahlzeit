@@ -18,39 +18,43 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-package org.wahlzeit.model;
+package org.wahlzeit.model.parliament;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.wahlzeit.model.PhotoId;
+
+import static org.junit.Assert.assertEquals;
 
 /**
- * Represent an place
+ * All test cases of the class {@link ParliamentPhoto}.
  */
-public class Location {
-	public Coordinate coordinate;
+public class ParliamentPhotoTest {
+	private ParliamentPhoto p;
 
-	/**
-	 * Construct that takes the three dimensions to create
-	 * a new Coordinate instance. Latter will then be used as coordinate.
-	 *
-	 * @param x value for x-direction
-	 * @param y value for y-direction
-	 * @param z value for z-direction
-	 */
-	Location(double x, double y, double z) {
-		coordinate = new Coordinate(x, y, z);
+	@Before
+	public void setUp() {
+		p = new ParliamentPhoto();
 	}
 
-	/**
-	 * Constructor that takes an Coordinate object
-	 *
-	 * @param coordinate Coordinate object to use for this location
-	 */
-	Location(Coordinate coordinate) {
-		this.coordinate = coordinate;
+	@Test
+	public void testConstructor() {
+		PhotoId id = PhotoId.getRandomId();
+		ParliamentPhoto p2 = new ParliamentPhoto(id);
+		assertEquals(id, p2.getId());
 	}
 
-	/**
-	 * Constructor that initializes coordinate with null
-	 */
-	Location() {
-		coordinate = null;
+	@Test
+	public void testYearbuild() {
+		int year = 1887;
+		p.setYearBuild(year);
+		assertEquals(year, p.getYearBuild());
+	}
+
+	@Test
+	public void testArchitectureStyle() {
+		String style = "Neorenaissance";
+		p.setArchitectureStyle(style);
+		assertEquals(style, p.getArchitectureStyle());
 	}
 }

@@ -18,39 +18,57 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-package org.wahlzeit.model;
+package org.wahlzeit.model.parliament;
 
-/**
- * Represent an place
- */
-public class Location {
-	public Coordinate coordinate;
+import com.googlecode.objectify.annotation.Subclass;
+import org.wahlzeit.model.Photo;
+import org.wahlzeit.model.PhotoId;
+
+@Subclass
+public class ParliamentPhoto extends Photo {
+
+	private int yearBuild;
+	private String architectureStyle;
 
 	/**
-	 * Construct that takes the three dimensions to create
-	 * a new Coordinate instance. Latter will then be used as coordinate.
-	 *
-	 * @param x value for x-direction
-	 * @param y value for y-direction
-	 * @param z value for z-direction
+	 * @methodtype constructor
 	 */
-	Location(double x, double y, double z) {
-		coordinate = new Coordinate(x, y, z);
+	public ParliamentPhoto() {
+		super();
 	}
 
 	/**
-	 * Constructor that takes an Coordinate object
-	 *
-	 * @param coordinate Coordinate object to use for this location
+	 * @methodtype constructor
 	 */
-	Location(Coordinate coordinate) {
-		this.coordinate = coordinate;
+	public ParliamentPhoto(PhotoId myId) {
+		super(myId);
 	}
 
 	/**
-	 * Constructor that initializes coordinate with null
+	 * @methodtype setter
 	 */
-	Location() {
-		coordinate = null;
+	public void setYearBuild(int newYear) {
+		yearBuild = newYear;
+	}
+
+	/**
+	 * @methodtype getter
+	 */
+	public int getYearBuild() {
+		return yearBuild;
+	}
+
+	/**
+	 * @methodtype setter
+	 */
+	public void setArchitectureStyle(String newStyle) {
+		architectureStyle = newStyle;
+	}
+
+	/**
+	 * @methodtype getter
+	 */
+	public String getArchitectureStyle() {
+		return architectureStyle;
 	}
 }

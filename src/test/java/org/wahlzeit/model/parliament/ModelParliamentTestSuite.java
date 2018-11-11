@@ -18,29 +18,18 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-package org.wahlzeit.model;
+package org.wahlzeit.model.parliament;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.wahlzeit.model.parliament.ModelParliamentTestSuite;
-import org.wahlzeit.model.persistence.DatastoreAdapterTest;
+
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-		DatastoreAdapterTest.class,
-		AccessRightsTest.class,
-		CoordinateTest.class,
-		FlagReasonTest.class,
-		GenderTest.class,
-		GuestTest.class,
-		LocationTest.class,
-		PhotoFilterTest.class,
-		TagsTest.class,
-		UserStatusTest.class,
-		ValueTest.class,
-		ModelParliamentTestSuite.class,
+		ParliamentPhotoTest.class,
+		ParliamentPhotoManagerTest.class,
+		ParliamentPhotoFactoryTest.class,
 })
-public class ModelTestSuite {
-	/** do nothing **/
+public class ModelParliamentTestSuite {
+	/* do nothing */
 }
-

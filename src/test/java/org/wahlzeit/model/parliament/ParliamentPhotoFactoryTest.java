@@ -18,29 +18,42 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-package org.wahlzeit.model;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.wahlzeit.model.parliament.ModelParliamentTestSuite;
-import org.wahlzeit.model.persistence.DatastoreAdapterTest;
+package org.wahlzeit.model.parliament;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-		DatastoreAdapterTest.class,
-		AccessRightsTest.class,
-		CoordinateTest.class,
-		FlagReasonTest.class,
-		GenderTest.class,
-		GuestTest.class,
-		LocationTest.class,
-		PhotoFilterTest.class,
-		TagsTest.class,
-		UserStatusTest.class,
-		ValueTest.class,
-		ModelParliamentTestSuite.class,
-})
-public class ModelTestSuite {
-	/** do nothing **/
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+/**
+ * All test cases of the class {@link ParliamentPhotoFactory}.
+ */
+public class ParliamentPhotoFactoryTest {
+	private ParliamentPhotoFactory i;
+
+	@Before
+	public void setUp() {
+		i = ParliamentPhotoFactory.getInstance();
+	}
+
+	@Test
+	public void testSameInstance() {
+		ParliamentPhotoFactory i2 = ParliamentPhotoFactory.getInstance();
+
+		assertEquals(i, i2);
+	}
+
+	@Test
+	public void testInstanceNotNull() {
+		assertNotNull(i);
+
+	}
+
+	@Test
+	public void testType() {
+		assertTrue(i instanceof ParliamentPhotoFactory);
+	}
 }
-
