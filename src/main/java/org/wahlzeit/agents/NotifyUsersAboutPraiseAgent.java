@@ -8,6 +8,7 @@ import org.wahlzeit.model.PhotoId;
 import org.wahlzeit.model.PhotoManager;
 import org.wahlzeit.model.User;
 import org.wahlzeit.model.UserManager;
+import org.wahlzeit.model.parliament.ParliamentPhotoManager;
 import org.wahlzeit.services.EmailAddress;
 import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.services.mailing.EmailService;
@@ -38,7 +39,7 @@ public class NotifyUsersAboutPraiseAgent extends Agent {
 	 * Notifies all users that want to get informed if their photos have been praised.
 	 */
 	protected void doRun() {
-		Map<PhotoId, Photo> photoCache = PhotoManager.getInstance().getPhotoCache();
+		Map<PhotoId, Photo> photoCache = ParliamentPhotoManager.getInstance().getPhotoCache();
 		Collection<Photo> photos = photoCache.values();
 
 		ArrayList<Photo> arrayListOfPhotos;
@@ -58,7 +59,7 @@ public class NotifyUsersAboutPraiseAgent extends Agent {
 					arrayListOfPhotos.add(photo);
 					ownerIdPhotosMap.put(ownerId, arrayListOfPhotos);
 					photo.setNoNewPraise();
-					PhotoManager.getInstance().savePhoto(photo);
+					ParliamentPhotoManager.getInstance().savePhoto(photo);
 				}
 			}
 		}
