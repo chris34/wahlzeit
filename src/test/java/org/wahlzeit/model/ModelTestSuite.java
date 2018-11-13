@@ -29,7 +29,8 @@ import org.wahlzeit.model.persistence.DatastoreAdapterTest;
 @Suite.SuiteClasses({
 		DatastoreAdapterTest.class,
 		AccessRightsTest.class,
-		CoordinateTest.class,
+		CartesianCoordinateTest.class,
+		SphericCoordinateTest.class,
 		FlagReasonTest.class,
 		GenderTest.class,
 		GuestTest.class,

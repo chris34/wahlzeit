@@ -20,33 +20,15 @@
 
 package org.wahlzeit.model;
 
-import static java.lang.Math.pow;
-import static java.lang.Math.sqrt;
-
-/**
- * Represents a coordinate in a three dimensional room.
- * Thus, a coordinate is described by the three values x,
- * y and z.
- */
-public class Coordinate {
-	private static final double EQUAL_DELTA = 1E-4;
-
-	private double x;
-	private double y;
-	private double z;
+public interface Coordinate {
 
 	/**
-	 * Constructor to instantiate a new Coordinate
+	 * Converts a spheric coordinate to an equal cartesian coordinate. If it is already
+	 * an cartesian coordinate, it is just returned.
 	 *
-	 * @param x value for x-direction
-	 * @param y value for y-direction
-	 * @param z value for z-direction
+	 * @return the cartesian coordinate
 	 */
-	Coordinate(double x, double y, double z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
+	CartesianCoordinate asCartesianCoordinate();
 
 	/**
 	 * Calculates the direct Cartesian distance between @param other
@@ -55,41 +37,30 @@ public class Coordinate {
 	 * @param other coordinate to calculate distance to
 	 * @return direct Cartesian distance between @param other and this
 	 */
-	public double getDistance(Coordinate other) {
-		double tmp = pow(this.x - other.x, 2);
-		tmp += pow(this.y - other.y, 2);
-		tmp += pow(this.z - other.z, 2);
-		return sqrt(tmp);
-	}
+	double getCartesianDistance(Coordinate other);
+
+	/**
+	 * Converts a cartesian coordinate to an equal spheric coordinate. If it is already
+	 * an spheric coordinate, it is just returned.
+	 *
+	 * @return the spheric coordinate
+	 */
+	SphericCoordinate asSphericCoordinate();
+
+	/**
+	 * Calculates the central angle between @param other and this coordinate.
+	 * See https://en.wikipedia.org/wiki/Great-circle_distance for a definition
+	 *
+	 * @param other coordinate to calculate angle with
+	 * @return central angle between @param other and this
+	 */
+	double getCentralAngle(Coordinate other);
 
 	/**
 	 * Compares, whether @param other and this class point to the same location.
 	 *
 	 * @param other coordinate to compare with
-	 * @return true, if x, y and z of @param other and this coordinate are equal. Otherwise false.
-	 */
-	public boolean isEqual(Coordinate other) {
-		boolean equalX = Math.abs(x - other.x) <= EQUAL_DELTA;
-		boolean equalY = Math.abs(y - other.y) <= EQUAL_DELTA;
-		boolean equalZ = Math.abs(z - other.z) <= EQUAL_DELTA;
-
-		return equalX && equalY && equalZ;
-	}
-
-
-	/**
-	 * Compares, whether @param other and this class point to the same location.
-	 * Uses isEqual(). In comparison, this method accepts an Object.
-	 *
-	 * @param other an Object to compare with
 	 * @return true, if @param other and this coordinate are equal. Otherwise false.
 	 */
-	@Override
-	public boolean equals(Object other) {
-		if(!(other instanceof Coordinate)) {
-			return false;
-		}
-
-		return isEqual((Coordinate) other);
-	}
+	boolean isEqual(Coordinate other);
 }

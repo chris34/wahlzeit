@@ -37,17 +37,25 @@ public class LocationTest {
 	}
 
 	@Test
-	public void testConstructor__coordinate() {
-		Coordinate coordinate = new Coordinate(1, 1, 1);
-		Location location = new Location(coordinate);
+	public void testConstructor__cartesianCoordinate() {
+		Coordinate cartesianCoordinate = new CartesianCoordinate(1, 1, 1);
+		Location location = new Location(cartesianCoordinate);
 
-		assertEquals(location.coordinate, coordinate);
+		assertEquals(location.coordinate, cartesianCoordinate);
+	}
+
+	@Test
+	public void testConstructor__sphericCoordinate() {
+		Coordinate sqhericCoordinate = new SphericCoordinate(1, 1, 1);
+		Location location = new Location(sqhericCoordinate);
+
+		assertEquals(location.coordinate, sqhericCoordinate);
 	}
 
 	@Test
 	public void testConstructor__explicitValues() {
 		Location location = new Location(1, 1, 1);
 
-		assertEquals(location.coordinate, new Coordinate(1, 1, 1));
+		assertEquals(location.coordinate, new CartesianCoordinate(1, 1, 1));
 	}
 }

@@ -27,21 +27,21 @@ public class Location {
 	public Coordinate coordinate;
 
 	/**
-	 * Construct that takes the three dimensions to create
-	 * a new Coordinate instance. Latter will then be used as coordinate.
+	 * Constructor that takes the three dimensions to create
+	 * a new CartesianCoordinate instance. Latter will then be used as coordinate.
 	 *
 	 * @param x value for x-direction
 	 * @param y value for y-direction
 	 * @param z value for z-direction
 	 */
 	Location(double x, double y, double z) {
-		coordinate = new Coordinate(x, y, z);
+		coordinate = new CartesianCoordinate(x, y, z);
 	}
 
 	/**
-	 * Constructor that takes an Coordinate object
+	 * Constructor that takes an CartesianCoordinate object
 	 *
-	 * @param coordinate Coordinate object to use for this location
+	 * @param coordinate CartesianCoordinate object to use for this location
 	 */
 	Location(Coordinate coordinate) {
 		this.coordinate = coordinate;
