@@ -29,7 +29,7 @@ import static org.junit.Assert.*;
  * All test cases of the class {@link SphericCoordinate}.
  */
 public class SphericCoordinateTest {
-	private static final double EQUAL_DELTA = 1E-4;
+	private static final double EQUAL_DELTA = AbstractCoordinate.EQUAL_DELTA;
 
 	private SphericCoordinate sphericCoordinate;
 

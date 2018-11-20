@@ -25,7 +25,7 @@ import static java.lang.Math.*;
 
 public abstract class AbstractCoordinate implements Coordinate {
 
-	private final double EQUAL_DELTA = 1E-4;
+	static final double EQUAL_DELTA = 1E-4;
 
 	/**
 	 * Calculates the direct Cartesian distance between @param other
