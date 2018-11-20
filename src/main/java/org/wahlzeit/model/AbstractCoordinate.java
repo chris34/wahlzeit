@@ -21,9 +21,11 @@
 
 package org.wahlzeit.model;
 
+import static java.lang.Math.*;
+
 public abstract class AbstractCoordinate implements Coordinate {
 
-	static final double EQUAL_DELTA = 1E-4;
+	private final double EQUAL_DELTA = 1E-4;
 
 	/**
 	 * Calculates the direct Cartesian distance between @param other
@@ -38,7 +40,13 @@ public abstract class AbstractCoordinate implements Coordinate {
 			throw new IllegalArgumentException("other is null");
 		}
 
-		return asCartesianCoordinate().getCartesianDistance(other);
+		CartesianCoordinate thisCartesian = this.asCartesianCoordinate();
+		CartesianCoordinate otherCartesian = other.asCartesianCoordinate();
+
+		double tmp = pow(thisCartesian.getX() - otherCartesian.getX(), 2);
+		tmp += pow(thisCartesian.getY() - otherCartesian.getY(), 2);
+		tmp += pow(thisCartesian.getZ() - otherCartesian.getZ(), 2);
+		return sqrt(tmp);
 	}
 
 	/**
@@ -53,17 +61,38 @@ public abstract class AbstractCoordinate implements Coordinate {
 			throw new IllegalArgumentException("other is null");
 		}
 
-		return asSphericCoordinate().getCentralAngle(other);
+		SphericCoordinate thisSpheric = this.asSphericCoordinate();
+		SphericCoordinate otherSpheric = other.asSphericCoordinate();
+
+		double Δx = cos(otherSpheric.getPhi()) * cos(otherSpheric.getTheta())
+				    - cos(thisSpheric.getPhi()) * cos(thisSpheric.getTheta());
+		double Δy = cos(otherSpheric.getPhi()) * sin(otherSpheric.getTheta())
+				    - cos(thisSpheric.getPhi()) * sin(thisSpheric.getTheta());
+		double Δz = sin(otherSpheric.getPhi()) - sin(thisSpheric.getPhi());
+		double c = sqrt(pow(Δx, 2) + pow(Δy, 2) + pow(Δz, 2));
+
+		return 2 * asin(c / 2);
 	}
 
 	/**
 	 * Compares, whether @param other and this class point to the same location.
 	 *
 	 * @param other coordinate to compare with
-	 * @return true, if @param other and this coordinate are equal. Otherwise false.
+	 * @return true, if x, y and z of @param other and this coordinate are equal. Otherwise false.
 	 */
 	@Override
 	public boolean isEqual(Coordinate other) {
-		return asCartesianCoordinate().isEqual(other);
+		if (other == null) {
+			throw new IllegalArgumentException("other is null");
+		}
+
+		CartesianCoordinate thisCartesian = this.asCartesianCoordinate();
+		CartesianCoordinate otherCartesian = other.asCartesianCoordinate();
+
+		boolean equalX = abs(thisCartesian.getX() - otherCartesian.getX()) <= EQUAL_DELTA;
+		boolean equalY = abs(thisCartesian.getY() - otherCartesian.getY()) <= EQUAL_DELTA;
+		boolean equalZ = abs(thisCartesian.getZ() - otherCartesian.getZ()) <= EQUAL_DELTA;
+
+		return equalX && equalY && equalZ;
 	}
 }

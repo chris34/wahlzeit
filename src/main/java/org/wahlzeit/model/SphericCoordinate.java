@@ -78,25 +78,11 @@ public class SphericCoordinate extends AbstractCoordinate {
 		return this;
 	}
 
-	/**
-	 * Calculates the central angle between @param other and this coordinate.
-	 *
-	 * @param other coordinate to calculate angle with
-	 * @return central angle between @param other and this
-	 */
-	@Override
-	public double getCentralAngle(Coordinate other) {
-		if (other == null) {
-			throw new IllegalArgumentException("other is null");
-		}
+	public double getPhi() {
+		return phi;
+	}
 
-		SphericCoordinate otherSpheric = other.asSphericCoordinate();
-
-		double Δx = cos(otherSpheric.phi)*cos(otherSpheric.theta) - cos(phi)*cos(theta);
-		double Δy = cos(otherSpheric.phi)*sin(otherSpheric.theta) - cos(phi)*sin(theta);
-		double Δz = sin(otherSpheric.phi) - sin(phi);
-		double c = sqrt(pow(Δx, 2) + pow(Δy, 2) + pow(Δz, 2));
-
-		return 2 * asin(c / 2);
+	public double getTheta() {
+		return theta;
 	}
 }

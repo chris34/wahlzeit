@@ -54,27 +54,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	}
 
 	/**
-	 * Calculates the direct Cartesian distance between @param other
-	 * and this coordinate.
-	 *
-	 * @param other coordinate to calculate distance to
-	 * @return direct Cartesian distance between @param other and this
-	 */
-	@Override
-	public double getCartesianDistance(Coordinate other) {
-		if (other == null) {
-			throw new IllegalArgumentException("other is null");
-		}
-
-		CartesianCoordinate otherCartesian = other.asCartesianCoordinate();
-
-		double tmp = pow(this.x - otherCartesian.x, 2);
-		tmp += pow(this.y - otherCartesian.y, 2);
-		tmp += pow(this.z - otherCartesian.z, 2);
-		return sqrt(tmp);
-	}
-
-	/**
 	 * Converts this coordinate into the spheric coordinate system.
 	 *
 	 * @return converted spheric coordinate
@@ -94,27 +73,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
 	/**
 	 * Compares, whether @param other and this class point to the same location.
-	 *
-	 * @param other coordinate to compare with
-	 * @return true, if x, y and z of @param other and this coordinate are equal. Otherwise false.
-	 */
-	@Override
-	public boolean isEqual(Coordinate other) {
-		if (other == null) {
-			throw new IllegalArgumentException("other is null");
-		}
-
-		CartesianCoordinate otherCartesian = other.asCartesianCoordinate();
-
-		boolean equalX = abs(x - otherCartesian.x) <= EQUAL_DELTA;
-		boolean equalY = abs(y - otherCartesian.y) <= EQUAL_DELTA;
-		boolean equalZ = abs(z - otherCartesian.z) <= EQUAL_DELTA;
-
-		return equalX && equalY && equalZ;
-	}
-
-	/**
-	 * Compares, whether @param other and this class point to the same location.
 	 * Uses isEqual(). In comparison, this method accepts an Object.
 	 *
 	 * @param other an Object to compare with
@@ -127,5 +85,17 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		}
 
 		return isEqual((CartesianCoordinate) other);
+	}
+
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public double getZ() {
+		return z;
 	}
 }
