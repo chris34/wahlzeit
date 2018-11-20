@@ -29,7 +29,7 @@ import static java.lang.Math.*;
  * Thus, a coordinate is described by the three values phi,
  * theta and radius.
  */
-public class SphericCoordinate implements Coordinate {
+public class SphericCoordinate extends AbstractCoordinate {
 
 	private final double phi;
 	private final double theta;
@@ -71,22 +71,6 @@ public class SphericCoordinate implements Coordinate {
 	}
 
 	/**
-	 * Calculates the direct Cartesian distance between @param other
-	 * and this coordinate.
-	 *
-	 * @param other coordinate to calculate distance to
-	 * @return direct Cartesian distance between @param other and this
-	 */
-	@Override
-	public double getCartesianDistance(Coordinate other) {
-		if (other == null) {
-			throw new IllegalArgumentException("other is null");
-		}
-
-		return asCartesianCoordinate().getCartesianDistance(other);
-	}
-
-	/**
 	 * @return this
 	 */
 	@Override
@@ -114,16 +98,5 @@ public class SphericCoordinate implements Coordinate {
 		double c = sqrt(pow(Δx, 2) + pow(Δy, 2) + pow(Δz, 2));
 
 		return 2 * asin(c / 2);
-	}
-
-	/**
-	 * Compares, whether @param other and this class point to the same location.
-	 *
-	 * @param other coordinate to compare with
-	 * @return true, if @param other and this coordinate are equal. Otherwise false.
-	 */
-	@Override
-	public boolean isEqual(Coordinate other) {
-		return asCartesianCoordinate().isEqual(other);
 	}
 }

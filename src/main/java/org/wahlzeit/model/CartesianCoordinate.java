@@ -27,9 +27,7 @@ import static java.lang.Math.*;
  * Thus, a coordinate is described by the three values x,
  * y and z.
  */
-public class CartesianCoordinate implements Coordinate {
-	private static final double EQUAL_DELTA = 1E-4;
-
+public class CartesianCoordinate extends AbstractCoordinate {
 	private final double x;
 	private final double y;
 	private final double z;
@@ -92,21 +90,6 @@ public class CartesianCoordinate implements Coordinate {
 		double phi = acos(y / radius);
 		double theta = atan2(y, x);
 		return new SphericCoordinate(phi, theta, radius);
-	}
-
-	/**
-	 * Calculates the central angle between @param other and this coordinate.
-	 *
-	 * @param other coordinate to calculate angle with
-	 * @return central angle between @param other and this
-	 */
-	@Override
-	public double getCentralAngle(Coordinate other) {
-		if (other == null) {
-			throw new IllegalArgumentException("other is null");
-		}
-
-		return asSphericCoordinate().getCentralAngle(other);
 	}
 
 	/**
