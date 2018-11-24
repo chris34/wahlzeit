@@ -26,6 +26,8 @@ public interface Coordinate {
 	 * Converts a spheric coordinate to an equal cartesian coordinate. If it is already
 	 * an cartesian coordinate, it is just returned.
 	 *
+	 * @methodtype conversion
+	 *
 	 * @return the cartesian coordinate
 	 */
 	CartesianCoordinate asCartesianCoordinate();
@@ -33,6 +35,8 @@ public interface Coordinate {
 	/**
 	 * Calculates the direct Cartesian distance between @param other
 	 * and this coordinate.
+	 *
+	 * @methodtype get
 	 *
 	 * @param other coordinate to calculate distance to
 	 * @return direct Cartesian distance between @param other and this
@@ -43,6 +47,8 @@ public interface Coordinate {
 	 * Converts a cartesian coordinate to an equal spheric coordinate. If it is already
 	 * an spheric coordinate, it is just returned.
 	 *
+	 * @methodtype conversion
+	 *
 	 * @return the spheric coordinate
 	 */
 	SphericCoordinate asSphericCoordinate();
@@ -51,6 +57,8 @@ public interface Coordinate {
 	 * Calculates the central angle between @param other and this coordinate.
 	 * See https://en.wikipedia.org/wiki/Great-circle_distance for a definition
 	 *
+	 * @methodtype get
+	 *
 	 * @param other coordinate to calculate angle with
 	 * @return central angle between @param other and this
 	 */
@@ -58,6 +66,8 @@ public interface Coordinate {
 
 	/**
 	 * Compares, whether @param other and this class point to the same location.
+	 *
+	 * @methodtype boolean-query
 	 *
 	 * @param other coordinate to compare with
 	 * @return true, if @param other and this coordinate are equal. Otherwise false.

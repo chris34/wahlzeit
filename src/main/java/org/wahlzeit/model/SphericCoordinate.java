@@ -38,6 +38,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 	/**
 	 * Constructor to instantiate a new SphericCoordinate
 	 *
+	 * @methodtype constructor
+	 *
 	 * @param phi φ: Zenith angle (0 ≤ φ ≤ π)
 	 * @param theta θ: Azimuth angle (0 ≤ θ ≤ 2π)
 	 * @param radius r: Radial distance
@@ -59,6 +61,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 	/**
 	 * Converts this spheric coordinate to an equal cartesian coordinate
 	 *
+	 * @methodtype conversion
+	 *
 	 * @return converted cartesian coordinate
 	 */
 	@Override
@@ -71,6 +75,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 	}
 
 	/**
+	 * @methodtype conversion
+	 *
 	 * @return this
 	 */
 	@Override
@@ -78,10 +84,16 @@ public class SphericCoordinate extends AbstractCoordinate {
 		return this;
 	}
 
+	/**
+	 * @methodtype get
+	 */
 	public double getPhi() {
 		return phi;
 	}
 
+	/**
+	 * @methodtype get
+	 */
 	public double getTheta() {
 		return theta;
 	}

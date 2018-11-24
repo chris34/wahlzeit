@@ -30,6 +30,9 @@ public abstract class AbstractCoordinate implements Coordinate {
 	/**
 	 * Calculates the direct Cartesian distance between @param other
 	 * and this coordinate.
+	 * Internally, converts the two involved coordinates to cartesian coordinates.
+	 *
+	 * @methodtype get
 	 *
 	 * @param other coordinate to calculate distance to
 	 * @return direct Cartesian distance between @param other and this
@@ -51,6 +54,9 @@ public abstract class AbstractCoordinate implements Coordinate {
 
 	/**
 	 * Calculates the central angle between @param other and this coordinate.
+	 * Internally, converts the two involved coordinates to spheric coordinates.
+	 *
+	 * @methodtype get
 	 *
 	 * @param other coordinate to calculate angle with
 	 * @return central angle between @param other and this
@@ -76,6 +82,9 @@ public abstract class AbstractCoordinate implements Coordinate {
 
 	/**
 	 * Compares, whether @param other and this class point to the same location.
+	 * Internally, converts the two involved coordinates to cartesian coordinates.
+	 *
+	 * @methodtype boolean-query
 	 *
 	 * @param other coordinate to compare with
 	 * @return true, if x, y and z of @param other and this coordinate are equal. Otherwise false.

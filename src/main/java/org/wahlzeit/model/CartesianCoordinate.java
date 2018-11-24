@@ -35,6 +35,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	/**
 	 * Constructor to instantiate a new CartesianCoordinate
 	 *
+	 * @methodtype constructor
+	 *
 	 * @param x value for x-direction
 	 * @param y value for y-direction
 	 * @param z value for z-direction
@@ -46,6 +48,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	}
 
 	/**
+	 * @methodtype conversion
+	 *
 	 * @return this
 	 */
 	@Override
@@ -55,6 +59,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
 	/**
 	 * Converts this coordinate into the spheric coordinate system.
+	 *
+	 * @methodtype conversion
 	 *
 	 * @return converted spheric coordinate
 	 */
@@ -87,14 +93,23 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		return isEqual((CartesianCoordinate) other);
 	}
 
+	/**
+	 * @methodtype get
+	 */
 	public double getX() {
 		return x;
 	}
 
+	/**
+	 * @methodtype get
+	 */
 	public double getY() {
 		return y;
 	}
 
+	/**
+	 * @methodtype get
+	 */
 	public double getZ() {
 		return z;
 	}
