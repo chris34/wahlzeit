@@ -58,6 +58,16 @@ public class SphericCoordinateTest {
 		new SphericCoordinate(1, 3*Math.PI, 1);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor__radiusZero() {
+		new SphericCoordinate(1, Math.PI, 0);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor__radiusNegative() {
+		new SphericCoordinate(1, Math.PI, -1);
+	}
+
 	@Test
 	public void testAsCartesianCoordinate() {
 		assertTrue(new SphericCoordinate(1, 1, 1).asCartesianCoordinate()
@@ -117,7 +127,7 @@ public class SphericCoordinateTest {
 
 	@Test
 	public void testIsEqual__Radiusdiffers() {
-		SphericCoordinate c1 = new SphericCoordinate(1, 1, 0);
+		SphericCoordinate c1 = new SphericCoordinate(1, 1, 2);
 		assertFalse(c1.isEqual(sphericCoordinate));
 	}
 

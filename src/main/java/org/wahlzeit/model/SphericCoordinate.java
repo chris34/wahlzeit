@@ -53,6 +53,10 @@ public class SphericCoordinate extends AbstractCoordinate {
 			throw new IllegalArgumentException("value of θ");
 		}
 
+		if (radius <= 0) {
+			throw new IllegalArgumentException("radius has to be greater than 0");
+		}
+
 		this.phi = phi;
 		this.theta = theta;
 		this.radius = radius;
