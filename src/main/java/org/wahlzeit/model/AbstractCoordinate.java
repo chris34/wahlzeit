@@ -39,17 +39,22 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public double getCartesianDistance(Coordinate other) {
-		if (other == null) {
-			throw new IllegalArgumentException("other is null");
-		}
+		assertOtherNotNull(other);
+		assertClassInvariants();
 
 		CartesianCoordinate thisCartesian = this.asCartesianCoordinate();
 		CartesianCoordinate otherCartesian = other.asCartesianCoordinate();
 
-		double tmp = pow(thisCartesian.getX() - otherCartesian.getX(), 2);
-		tmp += pow(thisCartesian.getY() - otherCartesian.getY(), 2);
-		tmp += pow(thisCartesian.getZ() - otherCartesian.getZ(), 2);
-		return sqrt(tmp);
+		double distance = pow(thisCartesian.getX() - otherCartesian.getX(), 2);
+		distance += pow(thisCartesian.getY() - otherCartesian.getY(), 2);
+		distance += pow(thisCartesian.getZ() - otherCartesian.getZ(), 2);
+		distance = sqrt(distance);
+
+		assert Double.isFinite(distance);
+		assert distance >= 0;
+		assertClassInvariants();
+
+		return distance;
 	}
 
 	/**
@@ -63,9 +68,8 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public double getCentralAngle(Coordinate other) {
-		if (other == null) {
-			throw new IllegalArgumentException("other is null");
-		}
+		assertOtherNotNull(other);
+		assertClassInvariants();
 
 		SphericCoordinate thisSpheric = this.asSphericCoordinate();
 		SphericCoordinate otherSpheric = other.asSphericCoordinate();
@@ -76,8 +80,14 @@ public abstract class AbstractCoordinate implements Coordinate {
 				    - cos(thisSpheric.getPhi()) * sin(thisSpheric.getTheta());
 		double Δz = sin(otherSpheric.getPhi()) - sin(thisSpheric.getPhi());
 		double c = sqrt(pow(Δx, 2) + pow(Δy, 2) + pow(Δz, 2));
+		double angle = 2 * asin(c / 2);
 
-		return 2 * asin(c / 2);
+		assert Double.isFinite(angle);
+		assert angle > 0;
+		assert angle < 2*PI;
+		assertClassInvariants();
+
+		return angle;
 	}
 
 	/**
@@ -91,9 +101,8 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public boolean isEqual(Coordinate other) {
-		if (other == null) {
-			throw new IllegalArgumentException("other is null");
-		}
+		assertOtherNotNull(other);
+		assertClassInvariants();
 
 		CartesianCoordinate thisCartesian = this.asCartesianCoordinate();
 		CartesianCoordinate otherCartesian = other.asCartesianCoordinate();
@@ -101,7 +110,32 @@ public abstract class AbstractCoordinate implements Coordinate {
 		boolean equalX = abs(thisCartesian.getX() - otherCartesian.getX()) <= EQUAL_DELTA;
 		boolean equalY = abs(thisCartesian.getY() - otherCartesian.getY()) <= EQUAL_DELTA;
 		boolean equalZ = abs(thisCartesian.getZ() - otherCartesian.getZ()) <= EQUAL_DELTA;
+		boolean isEqual = equalX && equalY && equalZ;
 
-		return equalX && equalY && equalZ;
+		assertClassInvariants();
+
+		return isEqual;
 	}
+
+	/**
+	 * Assertion method to test, whether a parameter named "other" is not null. Otherwise raises an
+	 * IllegalArgumentException.
+	 *
+	 * @methodtype assertion
+	 *
+	 * @param o Object to test, whether it is null
+	 * @exception IllegalArgumentException, if o was null
+	 */
+	private void assertOtherNotNull(Object o) {
+		if(o == null) {
+			throw new IllegalArgumentException("Other is null");
+		}
+	}
+
+	/**
+	 * Checks the invariants of this class.
+	 *
+	 * @methodtype assertion
+	 */
+	protected abstract void assertClassInvariants();
 }

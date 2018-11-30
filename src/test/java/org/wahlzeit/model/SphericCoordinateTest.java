@@ -49,6 +49,16 @@ public class SphericCoordinateTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor__phiNotANumber() {
+		new SphericCoordinate(Double.NaN, 1, 1);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor__phiInfinity() {
+		new SphericCoordinate(Double.POSITIVE_INFINITY, 1, 1);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__thetaSmall() {
 		new SphericCoordinate(1, -1, 1);
 	}
@@ -59,6 +69,16 @@ public class SphericCoordinateTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor__thetaNotANumber() {
+		new SphericCoordinate(1, Double.NaN, 1);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor__thetaInfinity() {
+		new SphericCoordinate(1, Double.POSITIVE_INFINITY, 1);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__radiusZero() {
 		new SphericCoordinate(1, Math.PI, 0);
 	}
@@ -66,6 +86,16 @@ public class SphericCoordinateTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__radiusNegative() {
 		new SphericCoordinate(1, Math.PI, -1);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor__radiusNotANumber() {
+		new SphericCoordinate(1, 1, Double.NaN);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor__radiusInfinity() {
+		new SphericCoordinate(1, 1, Double.POSITIVE_INFINITY);
 	}
 
 	@Test

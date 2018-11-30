@@ -38,6 +38,36 @@ public class CartesianCoordinateTest {
 		cartesianCoordinate = new CartesianCoordinate(0, 0, 0);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor__xNotANumber() {
+		new CartesianCoordinate(Double.NaN, 0, 0);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor__yNotANumber() {
+		new CartesianCoordinate(0, Double.NaN, 0);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor__zNotANumber() {
+		new CartesianCoordinate(0, 0, Double.NaN);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor__xInfinity() {
+		new CartesianCoordinate(Double.POSITIVE_INFINITY, 0, 0);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor__yInfinity() {
+		new CartesianCoordinate(0, Double.POSITIVE_INFINITY, 0);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor__zInfinity() {
+		new CartesianCoordinate(0, 0, Double.POSITIVE_INFINITY);
+	}
+
 	@Test
 	public void testAsCartesianCoordinate() {
 		assertSame(cartesianCoordinate, cartesianCoordinate.asCartesianCoordinate());
@@ -76,12 +106,12 @@ public class CartesianCoordinateTest {
 		cartesianCoordinate.getCartesianDistance(null);
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test(expected = AssertionError.class)
 	public void testAsSphericCoordinate__zeroDivision() {
 		new CartesianCoordinate(0,0,0).asSphericCoordinate();
 	}
 
-	@Test()
+	@Test
 	public void testAsSphericCoordinate() {
 		assertTrue(new CartesianCoordinate(1, 0, 0).asSphericCoordinate().
 				isEqual(new SphericCoordinate(1.5708, 0, 1)));

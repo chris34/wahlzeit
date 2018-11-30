@@ -45,21 +45,21 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @param radius r: Radial distance
 	 */
 	SphericCoordinate(double phi, double theta, double radius) {
-		if(phi < 0 || phi > PI) {
+		if (!Double.isFinite(phi) || phi < 0 || phi > PI) {
 			throw new IllegalArgumentException("value of φ");
 		}
-
-		if(theta < 0 || theta > 2*PI) {
+		if (!Double.isFinite(theta) || theta < 0 || theta > 2*PI) {
 			throw new IllegalArgumentException("value of θ");
 		}
-
-		if (radius <= 0) {
+		if (!Double.isFinite(radius) || radius <= 0) {
 			throw new IllegalArgumentException("radius has to be greater than 0");
 		}
 
 		this.phi = phi;
 		this.theta = theta;
 		this.radius = radius;
+
+		assertClassInvariants();
 	}
 
 	/**
@@ -71,6 +71,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
+		assertClassInvariants();
+
 		return new CartesianCoordinate(
 				radius * sin(phi) * cos(theta),
 				radius * sin(phi) * sin(theta),
@@ -100,5 +102,24 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	public double getTheta() {
 		return theta;
+	}
+
+	/**
+	 * Checks whether phi, theta and radius have an valid value.
+	 *
+	 * @methodtype assertion
+	 */
+	@Override
+	protected void assertClassInvariants() {
+		assert Double.isFinite(phi);
+		assert phi >= 0;
+		assert phi <= PI;
+
+		assert Double.isFinite(theta);
+		assert theta >= 0;
+		assert theta <= 2*PI;
+
+		assert Double.isFinite(radius);
+		assert radius > 0;
 	}
 }

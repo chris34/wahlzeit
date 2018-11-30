@@ -42,9 +42,21 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * @param z value for z-direction
 	 */
 	CartesianCoordinate(double x, double y, double z) {
+		if (!Double.isFinite(x)) {
+			throw new IllegalArgumentException("x is not finite");
+		}
+		if (!Double.isFinite(y)) {
+			throw new IllegalArgumentException("y is not finite");
+		}
+		if (!Double.isFinite(z)) {
+			throw new IllegalArgumentException("z is not finite");
+		}
+
 		this.x = x;
 		this.y = y;
 		this.z = z;
+
+		assertClassInvariants();
 	}
 
 	/**
@@ -66,14 +78,16 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
-		double radius = sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
+		assertClassInvariants();
 
-		if (radius == 0) {
-			throw new IllegalStateException("radius is 0");
-		}
+		double radius = sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
+		assert radius != 0 : "radius is 0";
 
 		double phi = acos(y / radius);
 		double theta = atan2(y, x);
+
+		assertClassInvariants();
+
 		return new SphericCoordinate(phi, theta, radius);
 	}
 
@@ -86,6 +100,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public boolean equals(Object other) {
+		assertClassInvariants();
+
 		if(!(other instanceof CartesianCoordinate)) {
 			return false;
 		}
@@ -112,5 +128,17 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	public double getZ() {
 		return z;
+	}
+
+	/**
+	 * Checks that all three dimensions are not NaN or infinity.
+	 *
+	 * @methodtype assertion
+	 */
+	@Override
+	protected void assertClassInvariants() {
+		assert Double.isFinite(x);
+		assert Double.isFinite(y);
+		assert Double.isFinite(z);
 	}
 }
