@@ -31,12 +31,6 @@ import static org.junit.Assert.assertNull;
 public class LocationTest {
 
 	@Test
-	public void testConstructor__empty() {
-		Location location = new Location();
-		assertNull(location.coordinate);
-	}
-
-	@Test
 	public void testConstructor__cartesianCoordinate() {
 		Coordinate cartesianCoordinate = new CartesianCoordinate(1, 1, 1);
 		Location location = new Location(cartesianCoordinate);

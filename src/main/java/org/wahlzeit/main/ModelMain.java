@@ -100,7 +100,6 @@ public abstract class ModelMain extends AbstractMain {
 		UserManager userManager = UserManager.getInstance();
 		User user = new User(userId, nickName, emailAddress);
 
-		// TODO
 		PhotoManager photoManager = ParliamentPhotoManager.getInstance();
 		File photoDirFile = new File(photoDir);
 		FileFilter photoFileFilter = file -> file.getName().endsWith(".jpg");

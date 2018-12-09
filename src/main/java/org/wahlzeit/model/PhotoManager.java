@@ -47,6 +47,20 @@ import java.util.logging.Logger;
 public class PhotoManager extends ObjectManager {
 
 	/**
+	 * Custom exception that will be used to repackage internal unchecked exceptions,
+	 * if the creation of a photo failed.
+	 */
+	public class CreatePhotoException extends Exception {
+		CreatePhotoException() {
+			super();
+		}
+
+		CreatePhotoException(Throwable cause) {
+			super(cause);
+		}
+	}
+
+	/**
 	 *
 	 */
 	protected static final ParliamentPhotoManager instance = new ParliamentPhotoManager();
@@ -339,7 +353,12 @@ public class PhotoManager extends ObjectManager {
 	 */
 	public Photo createPhoto(String filename, Image uploadedImage) throws Exception {
 		PhotoId id = PhotoId.getNextId();
-		Photo result = PhotoUtil.createPhoto(filename, id, uploadedImage);
+		Photo result;
+		try {
+			result = PhotoUtil.createPhoto(filename, id, uploadedImage);
+		} catch (IllegalArgumentException e) {
+			throw new CreatePhotoException(e);
+		}
 		addPhoto(result);
 		return result;
 	}

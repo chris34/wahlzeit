@@ -39,18 +39,15 @@ public class Location {
 	}
 
 	/**
-	 * Constructor that takes an CartesianCoordinate object
+	 * Constructor that takes an Coordinate object
 	 *
-	 * @param coordinate CartesianCoordinate object to use for this location
+	 * @param coordinate Coordinate object to use for this location
 	 */
 	Location(Coordinate coordinate) {
-		this.coordinate = coordinate;
-	}
+		if (coordinate == null) {
+			throw new IllegalArgumentException("coordinate must not be null");
+		}
 
-	/**
-	 * Constructor that initializes coordinate with null
-	 */
-	Location() {
-		coordinate = null;
+		this.coordinate = coordinate;
 	}
 }

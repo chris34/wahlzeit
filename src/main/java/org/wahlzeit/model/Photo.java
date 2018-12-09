@@ -200,6 +200,8 @@ public class Photo extends DataObject {
 	 * @methodtype get
 	 */
 	public String getSummary(ModelConfig cfg) {
+		assertNotNull(cfg, "cfg");
+
 		return cfg.asPhotoSummary(ownerId);
 	}
 
@@ -207,6 +209,8 @@ public class Photo extends DataObject {
 	 * @methodtype get
 	 */
 	public String getCaption(ModelConfig cfg) {
+		assertNotNull(cfg, "cfg");
+
 		String ownerName = UserManager.getInstance().getUserById(ownerId).getNickName();
 		return cfg.asPhotoCaption(ownerName);
 	}
@@ -245,6 +249,8 @@ public class Photo extends DataObject {
 	 * @methodtype boolean-query
 	 */
 	public boolean hasSameOwner(Photo photo) {
+		assertNotNull(photo, "photo");
+
 		return photo.getOwnerEmailAddress().equals(ownerEmailAddress);
 	}
 
@@ -316,6 +322,7 @@ public class Photo extends DataObject {
 	 * @methodtype boolean-query
 	 */
 	public boolean hasPhotoSize(PhotoSize size) {
+		assertNotNull(size, "size");
 		return maxPhotoSize.asInt() >= size.asInt();
 	}
 
@@ -330,6 +337,7 @@ public class Photo extends DataObject {
 	 * @methodtype get
 	 */
 	public String getPraiseAsString(ModelConfig cfg) {
+		assertNotNull(cfg, "cfg");
 		return cfg.asPraiseString(getPraise());
 	}
 
@@ -422,5 +430,17 @@ public class Photo extends DataObject {
 	public void setNoNewPraise() {
 		noVotesAtLastNotification = noVotes;
 		incWriteCount();
+	}
+
+	/**
+	 * @methodtype assert
+	 *
+	 * @param o Object to check, whether it is null. If it is null, an IllegalArgumentException is raised.
+	 * @param name Name of @parm o to use in the exception message.
+	 */
+	private void assertNotNull(Object o, String name) {
+		if (o == null) {
+			throw new IllegalArgumentException(name + " must not be null");
+		}
 	}
 }
