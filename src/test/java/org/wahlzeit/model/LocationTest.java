@@ -32,7 +32,7 @@ public class LocationTest {
 
 	@Test
 	public void testConstructor__cartesianCoordinate() {
-		Coordinate cartesianCoordinate = new CartesianCoordinate(1, 1, 1);
+		Coordinate cartesianCoordinate = CartesianCoordinate.getInstance(1, 1, 1);
 		Location location = new Location(cartesianCoordinate);
 
 		assertEquals(location.coordinate, cartesianCoordinate);
@@ -40,7 +40,7 @@ public class LocationTest {
 
 	@Test
 	public void testConstructor__sphericCoordinate() {
-		Coordinate sqhericCoordinate = new SphericCoordinate(1, 1, 1);
+		Coordinate sqhericCoordinate = SphericCoordinate.getInstance(1, 1, 1);
 		Location location = new Location(sqhericCoordinate);
 
 		assertEquals(location.coordinate, sqhericCoordinate);
@@ -50,6 +50,6 @@ public class LocationTest {
 	public void testConstructor__explicitValues() {
 		Location location = new Location(1, 1, 1);
 
-		assertEquals(location.coordinate, new CartesianCoordinate(1, 1, 1));
+		assertEquals(location.coordinate, CartesianCoordinate.getInstance(1, 1, 1));
 	}
 }

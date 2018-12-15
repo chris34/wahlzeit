@@ -35,87 +35,88 @@ public class SphericCoordinateTest {
 
 	@Before
 	public void startUp() {
-		sphericCoordinate = new SphericCoordinate(1, 1, 1);
+		sphericCoordinate = SphericCoordinate.getInstance(1, 1, 1);
+		assertNotNull(sphericCoordinate);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__phiSmall() {
-		new SphericCoordinate(-1, 1, 1);
+		SphericCoordinate.getInstance(-1, 1, 1);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__phiBig() {
-		new SphericCoordinate(3*Math.PI, 1, 1);
+		SphericCoordinate.getInstance(3*Math.PI, 1, 1);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__phiNotANumber() {
-		new SphericCoordinate(Double.NaN, 1, 1);
+		SphericCoordinate.getInstance(Double.NaN, 1, 1);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__phiInfinity() {
-		new SphericCoordinate(Double.POSITIVE_INFINITY, 1, 1);
+		SphericCoordinate.getInstance(Double.POSITIVE_INFINITY, 1, 1);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__thetaSmall() {
-		new SphericCoordinate(1, -1, 1);
+		SphericCoordinate.getInstance(1, -1, 1);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__thetaBig() {
-		new SphericCoordinate(1, 3*Math.PI, 1);
+		SphericCoordinate.getInstance(1, 3*Math.PI, 1);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__thetaNotANumber() {
-		new SphericCoordinate(1, Double.NaN, 1);
+		SphericCoordinate.getInstance(1, Double.NaN, 1);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__thetaInfinity() {
-		new SphericCoordinate(1, Double.POSITIVE_INFINITY, 1);
+		SphericCoordinate.getInstance(1, Double.POSITIVE_INFINITY, 1);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__radiusZero() {
-		new SphericCoordinate(1, Math.PI, 0);
+		SphericCoordinate.getInstance(1, Math.PI, 0);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__radiusNegative() {
-		new SphericCoordinate(1, Math.PI, -1);
+		SphericCoordinate.getInstance(1, Math.PI, -1);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__radiusNotANumber() {
-		new SphericCoordinate(1, 1, Double.NaN);
+		SphericCoordinate.getInstance(1, 1, Double.NaN);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__radiusInfinity() {
-		new SphericCoordinate(1, 1, Double.POSITIVE_INFINITY);
+		SphericCoordinate.getInstance(1, 1, Double.POSITIVE_INFINITY);
 	}
 
 	@Test
 	public void testAsCartesianCoordinate() {
-		assertTrue(new SphericCoordinate(1, 1, 1).asCartesianCoordinate()
-				.isEqual(new CartesianCoordinate(0.454649, 0.708073, 0.540302)));
+		assertTrue(SphericCoordinate.getInstance(1, 1, 1).asCartesianCoordinate()
+				.isEqual(CartesianCoordinate.getInstance(0.454649, 0.708073, 0.540302)));
 
-		assertTrue(new SphericCoordinate(3, 4, 5).asCartesianCoordinate()
-				.isEqual(new CartesianCoordinate(-0.461211, -0.534, -4.94996)));
+		assertTrue(SphericCoordinate.getInstance(3, 4, 5).asCartesianCoordinate()
+				.isEqual(CartesianCoordinate.getInstance(-0.461211, -0.534, -4.94996)));
 
-		assertTrue(new SphericCoordinate(1.5708, 1.5708, 1.0).asCartesianCoordinate()
-				.isEqual(new CartesianCoordinate(0, 1, 0)));
+		assertTrue(SphericCoordinate.getInstance(1.5708, 1.5708, 1.0).asCartesianCoordinate()
+				.isEqual(CartesianCoordinate.getInstance(0, 1, 0)));
 
-		assertTrue(new SphericCoordinate(1.5708, 0, 1.0).asCartesianCoordinate()
-				.isEqual(new CartesianCoordinate(1, 0, 0)));
+		assertTrue(SphericCoordinate.getInstance(1.5708, 0, 1.0).asCartesianCoordinate()
+				.isEqual(CartesianCoordinate.getInstance(1, 0, 0)));
 	}
 
 	@Test
 	public void testGetCartesianDistance() {
-		SphericCoordinate c = new SphericCoordinate(1, 5, 8);
+		SphericCoordinate c = SphericCoordinate.getInstance(1, 5, 8);
 		double distance = c.getCartesianDistance(sphericCoordinate);
 		assertEquals(8.230092, distance, EQUAL_DELTA);
 	}
@@ -132,8 +133,8 @@ public class SphericCoordinateTest {
 
 	@Test
 	public void testGetCentralAngle() {
-		SphericCoordinate s1 = new SphericCoordinate(0, Math.PI / 2, 6000.0);
-		SphericCoordinate s2 = new SphericCoordinate(Math.PI, Math.PI,500.0);
+		SphericCoordinate s1 = SphericCoordinate.getInstance(0, Math.PI / 2, 6000.0);
+		SphericCoordinate s2 = SphericCoordinate.getInstance(Math.PI, Math.PI,500.0);
 
 		assertEquals(1.570796, s1.getCentralAngle(s2), EQUAL_DELTA);
 	}
@@ -145,25 +146,50 @@ public class SphericCoordinateTest {
 
 	@Test
 	public void testIsEqual__Phidiffers() {
-		SphericCoordinate c1 = new SphericCoordinate(0, 1, 1);
+		SphericCoordinate c1 = SphericCoordinate.getInstance(0, 1, 1);
 		assertFalse(c1.isEqual(sphericCoordinate));
 	}
 
 	@Test
 	public void testIsEqual__Thetadiffers() {
-		SphericCoordinate c1 = new SphericCoordinate(1, 0, 1);
+		SphericCoordinate c1 = SphericCoordinate.getInstance(1, 0, 1);
 		assertFalse(c1.isEqual(sphericCoordinate));
 	}
 
 	@Test
 	public void testIsEqual__Radiusdiffers() {
-		SphericCoordinate c1 = new SphericCoordinate(1, 1, 2);
+		SphericCoordinate c1 = SphericCoordinate.getInstance(1, 1, 2);
 		assertFalse(c1.isEqual(sphericCoordinate));
 	}
 
 	@Test
 	public void testIsEqual__sameCoordinates() {
-		SphericCoordinate c1 = new SphericCoordinate(1, 1, 1);
+		SphericCoordinate c1 = SphericCoordinate.getInstance(1, 1, 1);
 		assertTrue(c1.isEqual(sphericCoordinate));
+	}
+
+	@Test
+	public void testShared__equalObjects() {
+		SphericCoordinate same = SphericCoordinate.getInstance(1, 1, 1);
+		assertSame(sphericCoordinate, same);
+		assertEquals(sphericCoordinate, same);
+	}
+
+	@Test
+	public void testShared__differentObjects() {
+		SphericCoordinate other = SphericCoordinate.getInstance(1, 1, 1);
+		assertSame(sphericCoordinate, other);
+		assertEquals(sphericCoordinate, other);
+	}
+
+	@Test
+	public void testHashCode() {
+		assertEquals(32535647, sphericCoordinate.hashCode());
+	}
+
+	@Test
+	public void testClone() {
+		SphericCoordinate clone = (SphericCoordinate)sphericCoordinate.clone();
+		assertEquals(sphericCoordinate, clone);
 	}
 }

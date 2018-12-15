@@ -35,37 +35,38 @@ public class CartesianCoordinateTest {
 
 	@Before
 	public void startUp() {
-		cartesianCoordinate = new CartesianCoordinate(0, 0, 0);
+		cartesianCoordinate = CartesianCoordinate.getInstance(0, 0, 0);
+		assertNotNull(cartesianCoordinate);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__xNotANumber() {
-		new CartesianCoordinate(Double.NaN, 0, 0);
+		CartesianCoordinate.getInstance(Double.NaN, 0, 0);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__yNotANumber() {
-		new CartesianCoordinate(0, Double.NaN, 0);
+		CartesianCoordinate.getInstance(0, Double.NaN, 0);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__zNotANumber() {
-		new CartesianCoordinate(0, 0, Double.NaN);
+		CartesianCoordinate.getInstance(0, 0, Double.NaN);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__xInfinity() {
-		new CartesianCoordinate(Double.POSITIVE_INFINITY, 0, 0);
+		CartesianCoordinate.getInstance(Double.POSITIVE_INFINITY, 0, 0);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__yInfinity() {
-		new CartesianCoordinate(0, Double.POSITIVE_INFINITY, 0);
+		CartesianCoordinate.getInstance(0, Double.POSITIVE_INFINITY, 0);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor__zInfinity() {
-		new CartesianCoordinate(0, 0, Double.POSITIVE_INFINITY);
+		CartesianCoordinate.getInstance(0, 0, Double.POSITIVE_INFINITY);
 	}
 
 	@Test
@@ -75,22 +76,22 @@ public class CartesianCoordinateTest {
 
 	@Test
 	public void testGetCartesianDistance() {
-		CartesianCoordinate c = new CartesianCoordinate(1, 5, 8);
+		CartesianCoordinate c = CartesianCoordinate.getInstance(1, 5, 8);
 		double distance = c.getCartesianDistance(cartesianCoordinate);
 		assertEquals(9.4868, distance, EQUAL_DELTA);
 	}
 
 	@Test
 	public void testGetCartesianDistance__Xdiffers() {
-		CartesianCoordinate c = new CartesianCoordinate(1, 0, 0);
+		CartesianCoordinate c = CartesianCoordinate.getInstance(1, 0, 0);
 		double distance = c.getCartesianDistance(cartesianCoordinate);
 		assertEquals(1, distance, EQUAL_DELTA);
 	}
 
 	@Test
 	public void testGetCartesianDistance__allDifferFloat() {
-		CartesianCoordinate c = new CartesianCoordinate(1, 5, 8);
-		CartesianCoordinate c2 = new CartesianCoordinate(10.5, 5.65, 8.9);
+		CartesianCoordinate c = CartesianCoordinate.getInstance(1, 5, 8);
+		CartesianCoordinate c2 = CartesianCoordinate.getInstance(10.5, 5.65, 8.9);
 		double distance = c.getCartesianDistance(c2);
 		assertEquals(9.5646, distance, EQUAL_DELTA);
 	}
@@ -108,13 +109,13 @@ public class CartesianCoordinateTest {
 
 	@Test(expected = AssertionError.class)
 	public void testAsSphericCoordinate__zeroDivision() {
-		new CartesianCoordinate(0,0,0).asSphericCoordinate();
+		CartesianCoordinate.getInstance(0,0,0).asSphericCoordinate();
 	}
 
 	@Test
 	public void testAsSphericCoordinate() {
-		assertTrue(new CartesianCoordinate(1, 0, 0).asSphericCoordinate().
-				isEqual(new SphericCoordinate(1.5708, 0, 1)));
+		assertTrue(CartesianCoordinate.getInstance(1, 0, 0).asSphericCoordinate().
+				isEqual(SphericCoordinate.getInstance(1.5708, 0, 1)));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -124,33 +125,33 @@ public class CartesianCoordinateTest {
 
 	@Test
 	public void testIsEqual__Xdiffers() {
-		CartesianCoordinate c1 = new CartesianCoordinate(.33333, 0, 0);
-		CartesianCoordinate c2 = new CartesianCoordinate(.1, 0, 0);
+		CartesianCoordinate c1 = CartesianCoordinate.getInstance(.33333, 0, 0);
+		CartesianCoordinate c2 = CartesianCoordinate.getInstance(.1, 0, 0);
 		assertFalse(c1.isEqual(c2));
 	}
 
 	@Test
 	public void testIsEqual__Ydiffers() {
-		CartesianCoordinate c1 = new CartesianCoordinate(0, 1, 0);
+		CartesianCoordinate c1 = CartesianCoordinate.getInstance(0, 1, 0);
 		assertFalse(c1.isEqual(cartesianCoordinate));
 	}
 
 	@Test
 	public void testIsEqual__Zdiffers() {
-		CartesianCoordinate c1 = new CartesianCoordinate(0, 0, 1);
+		CartesianCoordinate c1 = CartesianCoordinate.getInstance(0, 0, 1);
 		assertFalse(c1.isEqual(cartesianCoordinate));
 	}
 
 	@Test
 	public void testIsEqual__sameCoordinates() {
-		CartesianCoordinate c1 = new CartesianCoordinate(0, 0, 0);
+		CartesianCoordinate c1 = CartesianCoordinate.getInstance(0, 0, 0);
 		assertTrue(c1.isEqual(cartesianCoordinate));
 	}
 
 	@Test
 	public void testIsEqual__sameCoordinatesFloat() {
-		CartesianCoordinate c1 = new CartesianCoordinate(23.42, 0, 1);
-		CartesianCoordinate c2 = new CartesianCoordinate(23.42, 0, 1);
+		CartesianCoordinate c1 = CartesianCoordinate.getInstance(23.42, 0, 1);
+		CartesianCoordinate c2 = CartesianCoordinate.getInstance(23.42, 0, 1);
 		assertTrue(c1.isEqual(c2));
 	}
 
@@ -162,13 +163,38 @@ public class CartesianCoordinateTest {
 
 	@Test
 	public void testEquals__otherCoordinate() {
-		CartesianCoordinate c = new CartesianCoordinate(1, 0, 1);
+		CartesianCoordinate c = CartesianCoordinate.getInstance(1, 0, 1);
 		assertNotEquals(cartesianCoordinate, c);
 	}
 
 	@Test
 	public void testEquals__sameCoordinate() {
-		CartesianCoordinate c = new CartesianCoordinate(0, 0, 0);
+		CartesianCoordinate c = CartesianCoordinate.getInstance(0, 0, 0);
 		assertEquals(cartesianCoordinate, c);
+	}
+
+	@Test
+	public void testShared__equalObjects() {
+		CartesianCoordinate same = CartesianCoordinate.getInstance(0, 0, 0);
+		assertSame(cartesianCoordinate, same);
+		assertEquals(cartesianCoordinate, same);
+	}
+
+	@Test
+	public void testShared__differentObjects() {
+		CartesianCoordinate other = CartesianCoordinate.getInstance(10, 11, 23);
+		assertNotSame(cartesianCoordinate, other);
+		assertNotEquals(cartesianCoordinate, other);
+	}
+
+	@Test
+	public void testHashCode() {
+		assertEquals(29791, cartesianCoordinate.hashCode());
+	}
+
+	@Test
+	public void testClone() {
+		CartesianCoordinate clone = (CartesianCoordinate)cartesianCoordinate.clone();
+		assertEquals(cartesianCoordinate, clone);
 	}
 }

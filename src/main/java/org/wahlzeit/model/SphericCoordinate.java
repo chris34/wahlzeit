@@ -21,6 +21,9 @@
 
 package org.wahlzeit.model;
 
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+
 import static java.lang.Math.*;
 
 
@@ -35,16 +38,35 @@ public class SphericCoordinate extends AbstractCoordinate {
 	private final double theta;
 	private final double radius;
 
+	private static ConcurrentHashMap<Integer, SphericCoordinate> objects = new ConcurrentHashMap<>();
+
+
 	/**
-	 * Constructor to instantiate a new SphericCoordinate
+	 * Use getInstance() to get a new SphericCoordinate.
 	 *
 	 * @methodtype constructor
+	 */
+	private SphericCoordinate(double phi, double theta, double radius) {
+		this.phi = phi;
+		this.theta = theta;
+		this.radius = radius;
+
+		assertClassInvariants();
+	}
+
+	/**
+	 * Factory method that returns a value object with the specified attributes.
+	 * Internally, the objects are saved in a HashMap and are reused/shared. New
+	 * objects are only created, if a object with given attributes is absent.
+	 *
+	 * @methodtype factory
 	 *
 	 * @param phi φ: Zenith angle (0 ≤ φ ≤ π)
 	 * @param theta θ: Azimuth angle (0 ≤ θ ≤ 2π)
 	 * @param radius r: Radial distance
+	 * @return an value object that has the specified attributes.
 	 */
-	SphericCoordinate(double phi, double theta, double radius) {
+	public static SphericCoordinate getInstance(double phi, double theta, double radius) {
 		if (!Double.isFinite(phi) || phi < 0 || phi > PI) {
 			throw new IllegalArgumentException("value of φ");
 		}
@@ -55,11 +77,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 			throw new IllegalArgumentException("radius has to be greater than 0");
 		}
 
-		this.phi = phi;
-		this.theta = theta;
-		this.radius = radius;
-
-		assertClassInvariants();
+		int hash = calculateHash(phi, theta, radius);
+		return objects.computeIfAbsent(hash, key -> new SphericCoordinate(phi, theta, radius));
 	}
 
 	/**
@@ -73,7 +92,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	public CartesianCoordinate asCartesianCoordinate() {
 		assertClassInvariants();
 
-		return new CartesianCoordinate(
+		return CartesianCoordinate.getInstance(
 				radius * sin(phi) * cos(theta),
 				radius * sin(phi) * sin(theta),
 				radius * cos(phi)
@@ -121,5 +140,30 @@ public class SphericCoordinate extends AbstractCoordinate {
 
 		assert Double.isFinite(radius);
 		assert radius > 0;
+	}
+
+	/**
+	 * @methodtype helper
+	 *
+	 * @param phi φ: Zenith angle (0 ≤ φ ≤ π)
+	 * @param theta θ: Azimuth angle (0 ≤ θ ≤ 2π)
+	 * @param radius r: Radial distance
+	 * @return calculated hash
+	 */
+	private static int calculateHash(double phi, double theta, double radius) {
+		return Objects.hash(phi, theta, radius);
+	}
+
+	/**
+	 * see abstract super class for further description
+	 * uses calculateHash
+	 *
+	 * @methodtype getter
+	 *
+	 * @return hashCode of current object
+	 */
+	@Override
+	public int hashCode() {
+		return calculateHash(phi, theta, radius);
 	}
 }

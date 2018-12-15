@@ -91,6 +91,32 @@ public abstract class AbstractCoordinate implements Coordinate {
 	}
 
 	/**
+	 * As all Coordinats are value object, this can be simplified to return
+	 * itself. So there will be no copy object.
+	 *
+	 * @methodtype clone
+	 *
+	 * @return this
+	 */
+	@Override
+	protected Object clone() {
+		return this;
+	}
+
+   /**
+	* Compares, whether @param other and this class point to the same location.
+	* As all Coordinates are value objects, this can be a simple comparison with ==.
+	*
+	* @methodtype boolean-query
+	*
+	* @param o an Object to compare with
+	* @return true, if @param o and this coordinate are equal. Otherwise false.
+	*/
+	public boolean equals(Object o) {
+		return this == o;
+	}
+
+	/**
 	 * Compares, whether @param other and this class point to the same location.
 	 * Internally, converts the two involved coordinates to cartesian coordinates.
 	 *
@@ -138,4 +164,16 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 * @methodtype assertion
 	 */
 	protected abstract void assertClassInvariants();
+
+	/**
+	 * Require a custom hashCode in every Coordinate subclass, as those
+	 * instantiate value objects. The hash should be calculated with the
+	 * involvement of every class attribute.
+	 *
+	 * @methodtype getter
+	 *
+	 * @return hashCode of current object
+	 */
+	@Override
+	abstract public int hashCode();
 }

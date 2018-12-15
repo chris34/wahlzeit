@@ -20,6 +20,9 @@
 
 package org.wahlzeit.model;
 
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+
 import static java.lang.Math.*;
 
 /**
@@ -32,16 +35,34 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	private final double y;
 	private final double z;
 
+	private static ConcurrentHashMap<Integer, CartesianCoordinate> objects = new ConcurrentHashMap<>();
+
 	/**
-	 * Constructor to instantiate a new CartesianCoordinate
+	 * Use getInstance() to get a new CartesianCoordinate.
 	 *
 	 * @methodtype constructor
+	 */
+	private CartesianCoordinate(double x, double y, double z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+
+		assertClassInvariants();
+	}
+
+	/**
+	 * Factory method that returns a value object with the specified attributes.
+	 * Internally, the objects are saved in a HashMap and are reused/shared. New
+	 * objects are only created, if a object with given attributes is absent.
+	 *
+	 * @methodtype factory
 	 *
 	 * @param x value for x-direction
 	 * @param y value for y-direction
 	 * @param z value for z-direction
+	 * @return an value object that has the specified attributes.
 	 */
-	CartesianCoordinate(double x, double y, double z) {
+	public static CartesianCoordinate getInstance(double x, double y, double z) {
 		if (!Double.isFinite(x)) {
 			throw new IllegalArgumentException("x is not finite");
 		}
@@ -52,11 +73,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
 			throw new IllegalArgumentException("z is not finite");
 		}
 
-		this.x = x;
-		this.y = y;
-		this.z = z;
-
-		assertClassInvariants();
+		int hash = calculateHash(x, y, z);
+		return objects.computeIfAbsent(hash, key -> new CartesianCoordinate(x, y, z));
 	}
 
 	/**
@@ -88,25 +106,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
 		assertClassInvariants();
 
-		return new SphericCoordinate(phi, theta, radius);
-	}
-
-	/**
-	 * Compares, whether @param other and this class point to the same location.
-	 * Uses isEqual(). In comparison, this method accepts an Object.
-	 *
-	 * @param other an Object to compare with
-	 * @return true, if @param other and this coordinate are equal. Otherwise false.
-	 */
-	@Override
-	public boolean equals(Object other) {
-		assertClassInvariants();
-
-		if(!(other instanceof CartesianCoordinate)) {
-			return false;
-		}
-
-		return isEqual((CartesianCoordinate) other);
+		return SphericCoordinate.getInstance(phi, theta, radius);
 	}
 
 	/**
@@ -140,5 +140,30 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		assert Double.isFinite(x);
 		assert Double.isFinite(y);
 		assert Double.isFinite(z);
+	}
+
+	/**
+	 * @methodtype helper
+	 *
+	 * @param x value for x-direction
+	 * @param y value for y-direction
+	 * @param z value for z-direction
+	 * @return calculated hash
+	 */
+	private static int calculateHash(double x, double y, double z) {
+		return Objects.hash(x, y, z);
+	}
+
+	/**
+	 * see abstract super class for further description
+	 * uses calculateHash
+	 *
+	 * @methodtype getter
+	 *
+	 * @return hashCode of current object
+	 */
+	@Override
+	public int hashCode() {
+		return calculateHash(x, y, z);
 	}
 }

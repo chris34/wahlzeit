@@ -35,7 +35,7 @@ public class Location {
 	 * @param z value for z-direction
 	 */
 	Location(double x, double y, double z) {
-		coordinate = new CartesianCoordinate(x, y, z);
+		coordinate = CartesianCoordinate.getInstance(x, y, z);
 	}
 
 	/**
