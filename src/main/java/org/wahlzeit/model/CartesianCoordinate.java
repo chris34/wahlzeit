@@ -20,6 +20,8 @@
 
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.DesignPattern;
+
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -30,6 +32,10 @@ import static java.lang.Math.*;
  * Thus, a coordinate is described by the three values x,
  * y and z.
  */
+@DesignPattern(
+		name = "Flyweight",
+		participants = {"CartesianCoordinate"}
+)
 public class CartesianCoordinate extends AbstractCoordinate {
 	private final double x;
 	private final double y;

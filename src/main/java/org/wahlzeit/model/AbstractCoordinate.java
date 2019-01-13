@@ -21,8 +21,14 @@
 
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.DesignPattern;
+
 import static java.lang.Math.*;
 
+@DesignPattern(
+		name = "Template method",
+		participants = {"AbstractCoordinate", "CartesianCoordinate", "SphericCoordinate"}
+)
 public abstract class AbstractCoordinate implements Coordinate {
 
 	static final double EQUAL_DELTA = 1E-4;
