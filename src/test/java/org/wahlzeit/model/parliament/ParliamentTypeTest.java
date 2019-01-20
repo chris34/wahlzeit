@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 by Christoph Volkert
+ * Copyright (c) 2019 by Christoph Volkert
  *
  * This file is part of the Wahlzeit photo rating application.
  *
@@ -20,19 +20,9 @@
 
 package org.wahlzeit.model.parliament;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-
-
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-		ParliamentPhotoTest.class,
-		ParliamentPhotoManagerTest.class,
-		ParliamentPhotoFactoryTest.class,
-		ParliamentTest.class,
-		ParliamentType.class,
-		ParliamentManagerTest.class
-})
-public class ModelParliamentTestSuite {
-	/* do nothing */
+/**
+ * All test cases of the class {@link ParliamentType}.
+ */
+public class ParliamentTypeTest {
+	// TODO
 }

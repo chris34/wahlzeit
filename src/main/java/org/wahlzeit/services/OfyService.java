@@ -12,7 +12,9 @@ import org.wahlzeit.model.Photo;
 import org.wahlzeit.model.PhotoCase;
 import org.wahlzeit.model.Tag;
 import org.wahlzeit.model.User;
+import org.wahlzeit.model.parliament.Parliament;
 import org.wahlzeit.model.parliament.ParliamentPhoto;
+import org.wahlzeit.model.parliament.ParliamentType;
 import org.wahlzeit.model.persistence.DatastoreAdapter.ImageWrapper;
 
 /**
@@ -26,6 +28,8 @@ public class OfyService {
 	 * Register all entities at startup
 	 */
 	static {
+		factory().register(ParliamentType.class);
+		factory().register(Parliament.class);
 		factory().register(Photo.class);
 		factory().register(ParliamentPhoto.class);
 		factory().register(Globals.class);

@@ -27,8 +27,7 @@ import org.wahlzeit.model.PhotoId;
 @Subclass
 public class ParliamentPhoto extends Photo {
 
-	private int yearBuild;
-	private String architectureStyle;
+	private Parliament parliament;
 
 	/**
 	 * @methodtype constructor
@@ -47,28 +46,15 @@ public class ParliamentPhoto extends Photo {
 	/**
 	 * @methodtype setter
 	 */
-	public void setYearBuild(int newYear) {
-		yearBuild = newYear;
+	public void setParliament(Parliament newParliament) {
+		parliament = newParliament;
 	}
 
 	/**
 	 * @methodtype getter
 	 */
-	public int getYearBuild() {
-		return yearBuild;
+	public Parliament getParliament() {
+		return parliament;
 	}
 
-	/**
-	 * @methodtype setter
-	 */
-	public void setArchitectureStyle(String newStyle) {
-		architectureStyle = newStyle;
-	}
-
-	/**
-	 * @methodtype getter
-	 */
-	public String getArchitectureStyle() {
-		return architectureStyle;
-	}
 }

@@ -45,16 +45,9 @@ public class ParliamentPhotoTest {
 	}
 
 	@Test
-	public void testYearbuild() {
-		int year = 1887;
-		p.setYearBuild(year);
-		assertEquals(year, p.getYearBuild());
-	}
-
-	@Test
-	public void testArchitectureStyle() {
-		String style = "Neorenaissance";
-		p.setArchitectureStyle(style);
-		assertEquals(style, p.getArchitectureStyle());
+	public void testParliament() {
+		Parliament parliament = new Parliament(new ParliamentType("foo"));
+		p.setParliament(parliament);
+		assertEquals(parliament, p.getParliament());
 	}
 }
