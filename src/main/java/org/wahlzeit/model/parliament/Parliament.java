@@ -36,17 +36,6 @@ public class Parliament extends DataObject {
 	long id;
 
 	/**
-	 * TODO rm
-	 * @methodtype constructor
-	 * @param parliamentType ParliamentType of this Parlimant
-	 */
-	public Parliament(ParliamentType parliamentType) {
-		this.parliamentType = parliamentType;
-		this.name = name;
-		this.yearBuild = yearBuild;
-	}
-
-	/**
 	 * @methodtype constructor
 	 * @param parliamentType ParliamentType of this Parlimant
 	 */

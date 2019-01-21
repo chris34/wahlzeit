@@ -22,17 +22,23 @@ package org.wahlzeit.model.parliament;
 
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertEquals;
+
 /**
  * All test cases of the class {@link ParliamentManager}.
  */
 public class ParliamentManagerTest {
-	// TODO
 
 	@Test
 	public void testManager() {
-		Parliament p1 = ParliamentManager.getInstance().createParliament("type1");
-		Parliament p2 = ParliamentManager.getInstance().createParliament("type2");
+		ParliamentManager p1 = ParliamentManager.getInstance();
+		ParliamentManager p2 = ParliamentManager.getInstance();
 
-		p2.getType().setSuperType(p1.getType());
+		assertEquals(p1, p2);
+	}
+
+	@Test
+	public void testCreateParliament() {
+		ParliamentManager.getInstance().createParliament("type1", "TestName", 1808);
 	}
 }

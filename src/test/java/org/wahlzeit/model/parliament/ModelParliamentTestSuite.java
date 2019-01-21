@@ -30,7 +30,7 @@ import org.junit.runners.Suite;
 		ParliamentPhotoManagerTest.class,
 		ParliamentPhotoFactoryTest.class,
 		ParliamentTest.class,
-		ParliamentType.class,
+		ParliamentTypeTest.class,
 		ParliamentManagerTest.class
 })
 public class ModelParliamentTestSuite {

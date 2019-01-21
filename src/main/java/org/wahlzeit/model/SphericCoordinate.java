@@ -21,8 +21,8 @@
 
 package org.wahlzeit.model;
 
-import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static java.lang.Math.*;
 
@@ -38,7 +38,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	private final double theta;
 	private final double radius;
 
-	private static HashMap<Integer, SphericCoordinate> objects = new HashMap<>();
+	private static ConcurrentHashMap<Integer, SphericCoordinate> objects = new ConcurrentHashMap<>();
 
 
 	/**

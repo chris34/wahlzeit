@@ -22,8 +22,8 @@ package org.wahlzeit.model;
 
 import org.wahlzeit.utils.DesignPattern;
 
-import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 import static java.lang.Math.*;
@@ -42,7 +42,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	private final double y;
 	private final double z;
 
-	private static HashMap<Integer, CartesianCoordinate> objects = new HashMap<>();
+	private static ConcurrentHashMap<Integer, CartesianCoordinate> objects = new ConcurrentHashMap<>();
 
 	/**
 	 * Use getInstance() to get a new CartesianCoordinate.

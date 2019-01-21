@@ -22,18 +22,15 @@ package org.wahlzeit.model.parliament;
 
 
 import com.googlecode.objectify.ObjectifyService;
-import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.services.ObjectManager;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 public class ParliamentManager extends ObjectManager {
 
 	private static ParliamentManager instance = new ParliamentManager();
-	private static final Logger log = Logger.getLogger(ParliamentManager.class.getName()); // TODO rm
 
-	private HashSet<Parliament> parliaments = new HashSet<>();
+	private Map<Integer, Parliament> parliaments = new HashMap<>();
 	private Map<String, ParliamentType> parliamentTypes = new HashMap<>();
 
 	/**
@@ -56,12 +53,10 @@ public class ParliamentManager extends ObjectManager {
 		return parliamentTypes.computeIfAbsent(typeName, key -> new ParliamentType(typeName));
 	}
 
-	public Parliament createParliament(String typeName) {
+	public Parliament createParliament(String typeName, String name, int yearBuild) {
 		ParliamentType pt = getParliamentType(typeName);
-		Parliament parliament = pt.createInstance();
-		// TODO replace with hashmap?
-		//parliaments.put(parliament.getId(), parliament);
-		parliaments.add(parliament);
+		Parliament parliament = pt.createInstance(name, yearBuild);
+		parliaments.put(parliament.getId(), parliament);
 		return parliament;
 	}
 
@@ -82,11 +77,9 @@ public class ParliamentManager extends ObjectManager {
 			return parliamentsDB;
 		});
 
-		/* TODO
 		for (Parliament parliament : existingParliaments) {
 			parliaments.put(parliament.getId(), parliament);
-		}*/
-		log.info(LogBuilder.createSystemMessage().addMessage("All parliaments loaded.").toString());
+		}
 	}
 
 	/**
@@ -101,17 +94,13 @@ public class ParliamentManager extends ObjectManager {
 			return typesDB;
 		});
 
-		/* TODO
 		for (ParliamentType type : existingParliaments) {
-			parliamentTypes.put(type.getName(), type);
+			parliamentTypes.put(type.getArchitectureStyle(), type);
 		}
-		*/
-
-		log.info(LogBuilder.createSystemMessage().addMessage("All parliamentTypes loaded.").toString());
 	}
 
 	public void save() {
 		updateObjects(parliamentTypes.values());
-		updateObjects(parliaments);
+		updateObjects(parliaments.values());
 	}
 }

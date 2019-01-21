@@ -24,80 +24,39 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import org.wahlzeit.services.DataObject;
 
-import java.util.HashSet;
-import java.util.Iterator;
-
 
 @Entity
 public class ParliamentType extends DataObject {
 
-	protected ParliamentType superType = null;
-	protected HashSet<ParliamentType> subTypes = new HashSet<>();
-
 	@Id
-	protected String architecturStyle;
+	protected String architectureStyle;
 
-	public ParliamentType(String architecturStyle) {
-		if (architecturStyle == null || architecturStyle.equals("")) {
+	public ParliamentType(String architectureStyle) {
+		if (architectureStyle == null || architectureStyle.equals("")) {
 			throw new IllegalArgumentException("tried to set null sub-type");
 		}
 
-		this.architecturStyle = architecturStyle;
-		incWriteCount();
+		this.architectureStyle = architectureStyle;
 	}
 
-	public Parliament createInstance() {
-		return new Parliament(this);
-	}
-
-	public void setSuperType(ParliamentType newSuperType) {
-		superType = newSuperType;
-	}
-
-	public ParliamentType getSuperType() {
-		return superType;
-	}
-
-	public Iterator<ParliamentType> getSubTypeIterator() {
-		return subTypes.iterator();
-	}
-
-	public void addSubType(ParliamentType newSubType) {
-		if (newSubType == null) {
-			throw new IllegalArgumentException("tried to set null sub-type");
-		}
-
-		newSubType.setSuperType(this);
-		subTypes.add(newSubType);
+	public Parliament createInstance(String name, int yearBuild) {
+		return new Parliament(this, name, yearBuild);
 	}
 
 	/**
+	 * @methodtype query
+	 *
 	 * Returns whether this type is a subtype
-	 * @return true, if it is a subtype. Otherwise false.
+	 * @return Currently always returns false as no hierarchie is implemented
 	 */
 	public boolean isSubtype() {
-		return getSuperType() != null;
-	}
-
-	public boolean hasInstance(Parliament parliament) {
-		if (parliament == null) {
-			throw new IllegalArgumentException("asked about null object");
-		}
-
-		if (parliament.getType() == this) {
-			return true;
-		}
-
-		for (ParliamentType type : subTypes) {
-			if (type.hasInstance(parliament)) {
-				return true;
-			}
-		}
-
 		return false;
 	}
 
-	public String getArchitecturStyle() {
-		return architecturStyle;
+	/**
+	 * @methodtype getter
+	 */
+	public String getArchitectureStyle() {
+		return architectureStyle;
 	}
 }

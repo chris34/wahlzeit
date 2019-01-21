@@ -20,9 +20,35 @@
 
 package org.wahlzeit.model.parliament;
 
+import org.junit.Test;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
+
 /**
  * All test cases of the class {@link ParliamentType}.
  */
 public class ParliamentTypeTest {
-	// TODO
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test__constructor_null() {
+		new ParliamentType(null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test__constructor_emptyString() {
+		new ParliamentType("");
+	}
+
+	@Test
+	public void test_isSubtype() {
+		assertFalse(new ParliamentType("test").isSubtype());
+	}
+
+	@Test
+	public void test_getArchitectureStyle() {
+		String style = "test";
+		ParliamentType pt = new ParliamentType(style);
+		assertEquals(style, pt.getArchitectureStyle());
+	}
 }

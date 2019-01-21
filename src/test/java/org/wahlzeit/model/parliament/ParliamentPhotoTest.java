@@ -46,7 +46,8 @@ public class ParliamentPhotoTest {
 
 	@Test
 	public void testParliament() {
-		Parliament parliament = new Parliament(new ParliamentType("foo"));
+		ParliamentType pt = new ParliamentType("Neorenaissance");
+		Parliament parliament = new Parliament(pt, "name", 1867);
 		p.setParliament(parliament);
 		assertEquals(parliament, p.getParliament());
 	}

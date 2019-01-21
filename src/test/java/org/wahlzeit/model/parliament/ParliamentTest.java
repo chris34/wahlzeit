@@ -20,9 +20,31 @@
 
 package org.wahlzeit.model.parliament;
 
+import org.junit.Before;
+import org.junit.Test;
+
+import static junit.framework.TestCase.assertEquals;
+
 /**
  * All test cases of the class {@link Parliament}.
  */
 public class ParliamentTest {
-	// TODO
+	public ParliamentType pt;
+
+	@Before
+	public void setUp() {
+		pt = new ParliamentType("style");
+	}
+
+	@Test
+	public void testConstructor() {
+		new Parliament(pt, "TestName", 1900);
+	}
+
+	@Test
+	public void testYearBuild_setterGetter() {
+		Parliament parliament = new Parliament(pt, "TestName", 1900);
+		parliament.setYearBuild(1878);
+		assertEquals(1878, parliament.getYearBuild());
+	}
 }
